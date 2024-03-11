@@ -13,17 +13,10 @@ interface Translations {
 }
 
 const TranslationForm: React.FC = () => {
-  const [language, setLanguage] = useState("");
   const [translationKey, setTranslationKey] = useState("");
   const [translationValue, setTranslationValue] = useState<Translations>({
     ...init,
   });
-
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setLanguage(event.target.value);
-  };
 
   const handleKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTranslationKey(event.target.value);
@@ -36,7 +29,7 @@ const TranslationForm: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // Here you would handle the submission, for example, sending the data to a backend service
-    console.log(`Language: ${language}, Key: ${translationKey}`);
+    console.log(`Key: ${translationKey}`);
     console.log(translationValue);
   };
 
