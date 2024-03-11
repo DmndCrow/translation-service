@@ -15,13 +15,14 @@ datasource db {
 
 model TranslationKey {
   id Int @id @default(autoincrement())
-  key String
+  key String @unique
   values TranslationValue[]
   createdAt DateTime @default(now())
 }
 
 model Language {
   id Int @id @default(autoincrement())
+  key String @unique
   name String
   values TranslationValue[]
   createdAt DateTime @default(now())
