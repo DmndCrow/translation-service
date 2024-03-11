@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const getLanguages = async () => {
     return await prisma.language.findMany();
-  }
+  };
 
   const createLanguage = async (key: string, language: string) => {
     return await prisma.language.upsert({

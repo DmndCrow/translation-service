@@ -1,29 +1,42 @@
 "use client";
 
-import React, { useState } from "react";
-
-const languages = ["en", "ru", "kz"];
-const init: Translations = languages.reduce(
-  (orig, lang) => ({ ...orig, [lang]: "" }),
-  {}
-);
+import { Language, TranslationKey } from "@/lib/models";
+import React, { useEffect, useState } from "react";
 
 interface Translations {
-  [key: string]: string;
+  [id: number]: string;
 }
 
-const TranslationForm: React.FC = () => {
+type ParentProps = {
+  selectedKey?: TranslationKey;
+  languages: Language[];
+};
+
+type Props = ParentProps;
+
+const TranslationForm = ({ selectedKey, languages }: Props) => {
   const [translationKey, setTranslationKey] = useState("");
-  const [translationValue, setTranslationValue] = useState<Translations>({
-    ...init,
-  });
+  const [translationValue, setTranslationValue] = useState<Translations>({});
+  useEffect(() => {
+    const initial: Translations = languages.reduce(
+      (orig, lang) => ({ ...orig, [lang.id]: "" }),
+      {}
+    );
+    setTranslationValue({ ...initial });
+  }, [languages]);
+
+  if (!selectedKey) {
+    return null;
+  }
 
   const handleKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTranslationKey(event.target.value);
   };
 
-  const handleValueChange = (lang: string, value: string) => {
-    setTranslationValue({ ...translationValue, [lang]: value });
+  const handleValueChange = (langId: number, value: string) => {
+    const current = translationValue[langId];
+
+    setTranslationValue({ ...translationValue, [langId]: value });
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -55,20 +68,20 @@ const TranslationForm: React.FC = () => {
       </div>
 
       <div className="mb-6">
-        {languages.map((lang: string, index) => {
+        {languages.map((language: Language) => {
           return (
-            <React.Fragment key={index}>
+            <React.Fragment key={language.id}>
               <label
                 htmlFor="translationValue"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                {lang.toUpperCase()}
+                {language.key.toUpperCase()}
               </label>
               <input
                 id="translationValue"
                 type="text"
-                value={translationValue[lang]}
-                onChange={(e) => handleValueChange(lang, e.target.value)}
+                value={translationValue[language.id]}
+                onChange={(e) => handleValueChange(language.id, e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               />
             </React.Fragment>
