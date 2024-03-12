@@ -5,10 +5,6 @@ import AddKey from "@/components/addKey";
 import { Language } from "@/lib/models";
 
 const Home = async () => {
-  const languages: Language[] = await fetch(
-    "http://localhost:3000/api/database/language"
-  ).then((a) => a.json());
-
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -17,7 +13,7 @@ const Home = async () => {
       </div>
 
       <div className={styles.center}>
-        <TranslationForm languages={languages} />
+        <TranslationForm />
       </div>
     </main>
   );

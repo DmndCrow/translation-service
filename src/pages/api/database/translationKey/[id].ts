@@ -5,12 +5,12 @@ type QueryProps = {
   id: string;
 }
 
-type TranslationValue = {
+export type TranslationValue = {
   languageId: number;
   value: string;
 }
 
-type PostBodyProps = {
+export type PostBodyProps = {
   values: TranslationValue[];
 }
 
