@@ -32,10 +32,13 @@ model TranslationValue {
   id Int @id @default(autoincrement())
   value String
   languageId Int
-  language Language @relation(fields: [languageId], references: [id])
+  language Language @relation(fields: [languageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   translationKeyId Int
-  translationKey TranslationKey @relation(fields: [translationKeyId], references: [id])
+  translationKey TranslationKey @relation(fields: [translationKeyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@unique([languageId, translationKeyId])
+  @@index([languageId])
+  @@index([translationKeyId])
+  @@index([languageId, translationKeyId])
 }

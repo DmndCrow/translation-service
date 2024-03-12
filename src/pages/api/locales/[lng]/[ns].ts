@@ -43,9 +43,7 @@ const translations: Translations = {
 };
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const {
-    query: { lng, ns },
-  } = req;
+  const { lng, ns } = req.query;
 
   // Check if the requested language and namespace exist
   if (
