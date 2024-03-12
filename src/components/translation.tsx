@@ -9,7 +9,7 @@ interface Translations {
 }
 
 type ParentProps = {
-  selectedKey?: TranslationKey;
+  selectedKey?: number;
 };
 
 type Props = ParentProps;
@@ -18,6 +18,8 @@ const TranslationForm = ({ selectedKey }: Props) => {
   const [languages, setLanguages] = useState<Language[]>([]);
   const [translationKey, setTranslationKey] = useState("");
   const [translationValue, setTranslationValue] = useState<Translations>({});
+
+  console.log(selectedKey);
 
   useEffect(() => {
     fetchLanguages();
