@@ -5,7 +5,7 @@ export const getLanguageByKey = async (key: string) => {
   return await prisma.language.findFirst({
     where: { key: key },
   });
-}
+};
 
 const getLanguages = async () => {
   return await prisma.language.findMany();

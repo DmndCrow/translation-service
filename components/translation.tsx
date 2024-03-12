@@ -1,6 +1,6 @@
 "use client";
 
-import { Language, TranslationKey } from "@/lib/models";
+import { Language } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
 
