@@ -83,7 +83,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
           htmlFor="translationKey"
           className="block text-gray-700 text-sm font-bold mb-2"
         >
-          Translation Key
+          Translation Key - {selectedKey}
         </label>
         <input
           id="translationKey"
