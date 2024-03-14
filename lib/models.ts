@@ -13,8 +13,12 @@ export type TranslationKey = {
 
 export type TranslationValue = {
   id: number;
-  key: string;
-  language: string;
+  translationKeyId: string;
+  languageId: string;
   value: string;
   createdAt: Date;
+};
+
+export type QueryProps = {
+  id: string;
 };

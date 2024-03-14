@@ -1,9 +1,6 @@
+import { QueryProps } from "@/lib/models";
 import { prisma } from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-type QueryProps = {
-  id: string;
-};
 
 export type TranslationValue = {
   languageId: number;

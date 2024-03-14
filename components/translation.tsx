@@ -1,8 +1,13 @@
 "use client";
 
-import { Language } from "@/lib/models";
+import { Language, TranslationValue } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
+
+type NewKey = {
+  id?: number;
+  key: string;
+};
 
 interface Translations {
   [id: number]: string;
@@ -24,14 +29,44 @@ const TranslationForm = ({ selectedKey }: Props) => {
   }, []);
 
   useEffect(() => {
-    if (languages.length > 0) {
+    if (selectedKey) {
+      const fetchKey = async () => {
+        const response = await fetch(`/api/database/key/${selectedKey}`).then(
+          (a) => a.json()
+        );
+
+        setTranslationKey(response.key);
+      };
+
+      const fetchTranslations = async () => {
+        const response: TranslationValue[] = await fetch(
+          `/api/database/translationKey/${selectedKey}`
+        ).then((a) => a.json());
+
+        const initial: Translations = response.reduce(
+          (orig, lang) => ({ ...orig, [lang.languageId]: lang.value }),
+          {}
+        );
+        setTranslationValue({ ...initial });
+      };
+
+      fetchKey();
+      fetchTranslations();
+    }
+  }, [selectedKey]);
+
+  useEffect(() => {
+    if (
+      languages.length > 0 &&
+      Object.keys(translationValue).length < languages.length
+    ) {
       const initial: Translations = languages.reduce(
         (orig, lang) => ({ ...orig, [lang.id]: "" }),
         {}
       );
-      setTranslationValue({ ...initial });
+      setTranslationValue({ ...initial, ...translationValue });
     }
-  }, [languages]);
+  }, [languages, translationValue]);
 
   const fetchLanguages = async () => {
     const response = await fetch("/api/database/language").then((a) =>
@@ -49,13 +84,27 @@ const TranslationForm = ({ selectedKey }: Props) => {
     setTranslationValue({ ...translationValue, [langId]: value });
   };
 
+  const getKey = async () => {
+    const params: NewKey = { key: translationKey };
+
+    if (selectedKey) {
+      params.id = selectedKey;
+    }
+
+    const response = await fetch("/api/database/key", {
+      method: "POST",
+      body: JSON.stringify(params),
+    }).then((a) => a.json());
+
+    setTranslationKey(response.key);
+
+    return response;
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const translationKeyResponse = await fetch("/api/database/key", {
-      method: "POST",
-      body: JSON.stringify({ key: translationKey }),
-    }).then((a) => a.json());
+    const translationKeyResponse = await getKey();
 
     const props: PostBodyProps = {
       values: Object.keys(translationValue).map((langId) => ({
@@ -69,6 +118,8 @@ const TranslationForm = ({ selectedKey }: Props) => {
       method: "POST",
       body: JSON.stringify(props),
     }).then((a) => a.json());
+
+    window.location.reload();
   };
 
   return (
