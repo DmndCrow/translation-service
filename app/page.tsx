@@ -3,7 +3,7 @@ import TranslationForm from "@/components/translation";
 
 const Home = async () => {
   return (
-    <main className={styles.main}>
+    <main>
       <div className={styles.center}>
         <TranslationForm />
       </div>

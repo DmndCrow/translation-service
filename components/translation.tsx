@@ -37,7 +37,6 @@ const TranslationForm = ({ selectedKey }: Props) => {
     const response = await fetch("/api/database/language").then((a) =>
       a.json()
     );
-    console.log(response);
 
     setLanguages(response);
   };

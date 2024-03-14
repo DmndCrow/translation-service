@@ -2,7 +2,9 @@ import { prisma } from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const getKeys = async () => {
-  return await prisma.translationKey.findMany();
+  return await prisma.translationKey.findMany({
+    orderBy: { key: "asc" },
+  });
 };
 
 const createKey = async (key: string) => {

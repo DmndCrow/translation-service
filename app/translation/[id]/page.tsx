@@ -3,6 +3,7 @@
 import TranslationForm from "@/components/translation";
 import { useParams } from "next/navigation";
 import React from "react";
+import styles from "@/app/page.module.css";
 
 const TranslationFormId = () => {
   const params = useParams();
@@ -12,7 +13,13 @@ const TranslationFormId = () => {
     return null;
   }
 
-  return <TranslationForm selectedKey={+params.id} />;
+  return (
+    <main>
+      <div className={styles.center}>
+        <TranslationForm selectedKey={+params.id} />
+      </div>
+    </main>
+  );
 };
 
 export default TranslationFormId;
