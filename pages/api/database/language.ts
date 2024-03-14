@@ -8,7 +8,9 @@ export const getLanguageByKey = async (key: string) => {
 };
 
 const getLanguages = async () => {
-  return await prisma.language.findMany();
+  return await prisma.language.findMany({
+    orderBy: { id: "asc" },
+  });
 };
 
 const createLanguage = async (key: string, language: string) => {

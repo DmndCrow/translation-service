@@ -19,7 +19,7 @@ const AddKey = () => {
   return (
     <div className="flex">
       <input
-        id="translationValue"
+        id="translationKeyAdd"
         type="text"
         value={key}
         placeholder="welcome"

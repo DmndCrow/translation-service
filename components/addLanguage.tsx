@@ -21,7 +21,7 @@ const AddLanguage = () => {
   return (
     <div className="flex">
       <input
-        id="translationValue"
+        id="translationValueKey"
         type="text"
         value={key}
         placeholder="en"
@@ -29,7 +29,7 @@ const AddLanguage = () => {
         className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       />
       <input
-        id="translationValue"
+        id="translationValueLanguage"
         type="text"
         value={language}
         placeholder="English"
@@ -42,7 +42,7 @@ const AddLanguage = () => {
         type="submit"
         disabled={key.length === 0 || language.length === 0}
       >
-        Add Language
+        Добавить язык
       </button>
     </div>
   );
