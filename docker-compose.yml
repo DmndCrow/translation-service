@@ -1,0 +1,19 @@
+version: '3'
+services:
+  translation-service:
+    container_name: translation_service
+    restart: always
+    build:
+      context: .
+      dockerfile: ./deployment/Dockerfile
+    ports:
+      - ${SERVICE_PORT}:3000
+    command: npm start
+    networks:
+      - external_network
+      - default
+
+networks:
+  external_network:
+    name: ${NETWORK_NAME}
+    external: true
