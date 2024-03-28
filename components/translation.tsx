@@ -153,9 +153,10 @@ const TranslationForm = ({ selectedKey }: Props) => {
               >
                 {language.key.toUpperCase()}
               </label>
-              <input
+              <textarea
                 id="translationValue"
-                type="text"
+                cols={80}
+                rows={3}
                 value={translationValue[language.id]}
                 onChange={(e) => handleValueChange(language.id, e.target.value)}
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
