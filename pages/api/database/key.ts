@@ -4,6 +4,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 const getKeys = async () => {
   return await prisma.translationKey.findMany({
     orderBy: { key: "asc" },
+    include: {
+      values: true,
+    },
   });
 };
 

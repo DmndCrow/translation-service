@@ -9,6 +9,7 @@ export type TranslationKey = {
   id: number;
   key: string;
   createdAt: Date;
+  values?: TranslationValue[];
 };
 
 export type TranslationValue = {
