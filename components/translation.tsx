@@ -122,6 +122,14 @@ const TranslationForm = ({ selectedKey }: Props) => {
     window.location.reload();
   };
 
+  const deleteKey = () => {
+    fetch(`/api/database/key/${selectedKey}`, {
+      method: "DELETE",
+    }).then(() => {
+      window.location.href = "/";
+    });
+  };
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -173,6 +181,15 @@ const TranslationForm = ({ selectedKey }: Props) => {
         >
           {selectedKey ? "Обновить перевод" : "Добавить перевод"}
         </button>
+
+        {selectedKey && (
+          <button
+            className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            onClick={() => deleteKey()}
+          >
+            {"Удалить ключ"}
+          </button>
+        )}
       </div>
     </form>
   );
