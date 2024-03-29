@@ -13,6 +13,9 @@ const Header = () => {
           <li>
             <a href="/upload-data">Загрузить данные</a>
           </li>
+          <li>
+            <a href="/get-model">Модель ключей</a>
+          </li>
         </ul>
       </nav>
     </header>

@@ -21,3 +21,25 @@ export const buildNestedObject = (keys: TranslationKey[]): NestedObject => {
   });
   return result;
 };
+
+export const generateEnums = (keys: string[]): any => {
+  const enumGroups: Record<string, Record<string, string>> = {};
+
+  keys.forEach((key) => {
+    if (key.includes(".")) {
+      const [prefix, ...rest] = key.split(".");
+      const enumKey: string = rest.join("__");
+      if (!enumGroups[prefix]) {
+        enumGroups[prefix] = {};
+      }
+      enumGroups[prefix][enumKey] = key;
+    }
+  });
+
+  return enumGroups;
+};
+
+export const prettifyEnum = (response: string) => {
+  const formatted = response.replace(/\\n/g, "\n").replace(/\\"/g, '"');
+  return `{\n${formatted}\n}`;
+};

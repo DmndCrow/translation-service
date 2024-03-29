@@ -1,7 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 
-const getKeys = async () => {
+export const getKeys = async () => {
   return await prisma.translationKey.findMany({
     orderBy: { key: "asc" },
     include: {
