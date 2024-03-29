@@ -10,6 +10,9 @@ const Header = () => {
           <li>
             <a href="/">Добавить новый ключ</a>
           </li>
+          <li>
+            <a href="/upload-data">Загрузить данные</a>
+          </li>
         </ul>
       </nav>
     </header>

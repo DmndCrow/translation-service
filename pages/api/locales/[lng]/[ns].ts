@@ -23,17 +23,71 @@ const getTranslationValues = async (languageId: number) => {
   );
 };
 
+const createTranslationValue = async (
+  languageId: number,
+  key: string,
+  value: string
+) => {
+  const translationKey = await prisma.translationKey.upsert({
+    where: {
+      key: key,
+    },
+    update: {},
+    create: {
+      key: key,
+    },
+  });
+
+  await prisma.translationValue.upsert({
+    where: {
+      languageId_translationKeyId: {
+        translationKeyId: translationKey.id,
+        languageId: languageId,
+      },
+    },
+    update: { value: value },
+    create: {
+      value: value,
+      languageId: languageId,
+      translationKeyId: translationKey.id,
+    },
+  });
+};
+
+const insertTranslationValues = async (
+  languageId: number,
+  data: { [key: string]: string }
+) => {
+  await Promise.all(
+    Object.keys(data).map(async (key) => {
+      await createTranslationValue(languageId, key, data[key]);
+    })
+  );
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { lng, ns } = req.query;
+  const { lng } = req.query;
 
   const language = await getLanguageByKey(lng as string);
   if (!language) return res.status(404).json({ message: "Not found" });
 
-  const translationValues = await getTranslationValues(language.id);
+  if (req.method === "GET") {
+    const translationValues = await getTranslationValues(language.id);
 
-  const data = { ...translationValues };
-  return res.json(data);
+    const data = { ...translationValues };
+    return res.json(data);
+  }
+
+  if (req.method === "POST") {
+    const { data } = req.body;
+
+    await insertTranslationValues(language.id, data);
+
+    return res.status(200).json({ message: "success" });
+  }
+
+  return res.status(200).json({ message: "success" });
 }
