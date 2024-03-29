@@ -18,9 +18,21 @@ export default async function handler(
     });
   };
 
+  const deleteTranslationKey = async (keyId: number) => {
+    return await prisma.translationKey.delete({
+      where: { id: keyId },
+    });
+  };
+
   if (req.method === "GET") {
     const response = await getTranslationKey(+id);
 
     return res.status(200).json(response);
+  }
+
+  if (req.method === "DELETE") {
+    await deleteTranslationKey(+id);
+
+    return res.status(200).json({ message: "Translation key deleted" });
   }
 }
