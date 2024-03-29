@@ -34,12 +34,6 @@ export default async function handler(
 
   const translationValues = await getTranslationValues(language.id);
 
-  const data = {
-    [lng as string]: {
-      [ns as string]: {
-        ...translationValues,
-      },
-    },
-  };
+  const data = { ...translationValues };
   return res.json(data);
 }
