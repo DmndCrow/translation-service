@@ -23,3 +23,16 @@ export type TranslationValue = {
 export type QueryProps = {
   id: string;
 };
+
+export type NestedObject = {
+  [key: string]: NestedObject | (TranslationKey & { __isLeaf: boolean });
+};
+
+export type SidebarItemProps = {
+  label: string;
+  children?: NestedObject;
+};
+
+export type SidebarProps = {
+  nestedKeys: NestedObject;
+};
