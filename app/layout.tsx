@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/sidebar";
 import Header from "@/components/header";
+import { SidebarContextProvider } from "@/lib/contexts/sidebarContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,11 +21,13 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <div className="flex h-screen">
-          <Sidebar />
-          <div className="flex flex-col flex-1 pl-64">
-            <Header />
-            <div className="p-4">{children}</div>
-          </div>
+          <SidebarContextProvider>
+            <Sidebar />
+            <div className="flex flex-col flex-1 pl-64">
+              <Header />
+              <div className="p-4">{children}</div>
+            </div>
+          </SidebarContextProvider>
         </div>
       </body>
     </html>

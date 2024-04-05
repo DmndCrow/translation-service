@@ -1,5 +1,6 @@
 "use client";
 
+import { useSidebarContext } from "@/lib/contexts/sidebarContext";
 import { Language, TranslationValue } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
@@ -20,6 +21,8 @@ type ParentProps = {
 type Props = ParentProps;
 
 const TranslationForm = ({ selectedKey }: Props) => {
+  const { fetchKeys: refreshSidebarContent } = useSidebarContext();
+
   const [languages, setLanguages] = useState<Language[]>([]);
   const [translationKey, setTranslationKey] = useState("");
   const [translationValue, setTranslationValue] = useState<Translations>({});
@@ -119,7 +122,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
       body: JSON.stringify(props),
     }).then((a) => a.json());
 
-    window.location.reload();
+    await refreshSidebarContent();
   };
 
   const deleteKey = () => {

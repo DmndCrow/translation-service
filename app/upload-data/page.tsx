@@ -2,8 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import { Language } from "@/lib/models";
+import { useSidebarContext } from "@/lib/contexts/sidebarContext";
 
 const UploadData = () => {
+  const { fetchKeys: refreshSidebarContent } = useSidebarContext();
+
   const [jsonValue, setJsonValue] = useState("");
   const [languages, setLanguages] = useState<Language[]>([]);
   const [selectedLanguage, setSelectedLanguage] = useState("en");
@@ -42,7 +45,7 @@ const UploadData = () => {
       body: JSON.stringify({ data: json }),
     });
 
-    window.location.reload();
+    await refreshSidebarContent();
   };
 
   return (

@@ -1,25 +1,19 @@
 /* eslint-disable react/no-children-prop */
 "use client";
 
-import { NestedObject, TranslationKey } from "@/lib/models";
-import { useEffect, useState } from "react";
+import { NestedObject } from "@/lib/models";
+import { useEffect } from "react";
 import SidebarItem from "./sidebarItem";
-import { buildNestedObject } from "@/lib/functions";
+import { useSidebarContext } from "@/lib/contexts/sidebarContext";
 
 const Sidebar = () => {
-  const [nestedKeys, setNestedKeys] = useState({});
+  const { nestedKeys, fetchKeys } = useSidebarContext();
 
   useEffect(() => {
-    fetchKeys();
-  }, []);
-
-  const fetchKeys = async () => {
-    const response = await fetch("/api/database/key").then((a) => a.json());
-
-    const nestedKeys = buildNestedObject(response);
-
-    setNestedKeys(nestedKeys);
-  };
+    if (Object.keys(nestedKeys).length === 0) {
+      fetchKeys();
+    }
+  }, [nestedKeys, fetchKeys]);
 
   return (
     <aside>
