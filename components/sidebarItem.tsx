@@ -8,7 +8,7 @@ type Props = {
 };
 
 const SidebarItem = ({ label, children }: Props) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
   const hasChildren =
     children && Object.keys(children).length > 0 && !("__isLeaf" in children);
 
