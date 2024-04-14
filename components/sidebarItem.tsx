@@ -1,14 +1,20 @@
 /* eslint-disable react/no-children-prop */
 import { NestedObject, TranslationKey } from "@/lib/models";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
+  isDefaultOpen: boolean;
   label: string;
   children: NestedObject;
 };
 
-const SidebarItem = ({ label, children }: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
+const SidebarItem = ({ isDefaultOpen, label, children }: Props) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    setIsOpen(isDefaultOpen);
+  }, [isDefaultOpen]);
+
   const hasChildren =
     children && Object.keys(children).length > 0 && !("__isLeaf" in children);
 
@@ -53,6 +59,7 @@ const SidebarItem = ({ label, children }: Props) => {
               key={key}
               label={key}
               children={value as NestedObject}
+              isDefaultOpen={isDefaultOpen}
             />
           ))}
         </div>
