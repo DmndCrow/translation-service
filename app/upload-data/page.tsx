@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Language } from "@/lib/models";
 import { useSidebarContext } from "@/lib/contexts/sidebarContext";
+import { apiFetch } from "@/lib/api";
 
 const UploadData = () => {
   const { fetchKeys: refreshSidebarContent } = useSidebarContext();
@@ -16,7 +17,7 @@ const UploadData = () => {
   }, []);
 
   const fetchLanguages = async () => {
-    const response = await fetch("/api/database/language").then((a) =>
+    const response = await apiFetch("/api/database/language").then((a) =>
       a.json()
     );
 
@@ -37,7 +38,7 @@ const UploadData = () => {
 
     const json = JSON.parse(jsonValue);
 
-    await fetch(`/api/locales/${selectedLanguage}/ns`, {
+    await apiFetch(`/api/locales/${selectedLanguage}/ns`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

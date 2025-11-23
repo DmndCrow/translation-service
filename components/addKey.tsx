@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "@/lib/api";
 
 const AddKey = () => {
   const [key, setKey] = useState<string>("");
 
   const addKey = async () => {
-    await fetch("/api/database/key", {
+    await apiFetch("/api/database/key", {
       method: "POST",
       body: JSON.stringify({ key }),
     }).then((a) => {

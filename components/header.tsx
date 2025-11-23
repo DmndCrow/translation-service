@@ -1,3 +1,4 @@
+import Link from "next/link";
 import constants from "@/lib/constants";
 import AddLanguage from "./addLanguage";
 
@@ -8,13 +9,13 @@ const Header = () => {
       <nav>
         <ul className="flex space-x-4">
           <li>
-            <a href="/">Добавить новый ключ</a>
+            <Link href="/">Добавить новый ключ</Link>
           </li>
           <li>
-            <a href="/upload-data">Загрузить данные</a>
+            <Link href="/upload-data">Загрузить данные</Link>
           </li>
           <li>
-            <a href="/get-model">Модель ключей</a>
+            <Link href="/get-model">Модель ключей</Link>
           </li>
         </ul>
       </nav>

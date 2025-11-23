@@ -4,6 +4,7 @@ import { useSidebarContext } from "@/lib/contexts/sidebarContext";
 import { Language, TranslationValue } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
+import { apiFetch, getApiUrl } from "@/lib/api";
 
 type NewKey = {
   id?: number;
@@ -34,7 +35,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
   useEffect(() => {
     if (selectedKey) {
       const fetchKey = async () => {
-        const response = await fetch(`/api/database/key/${selectedKey}`).then(
+        const response = await apiFetch(`/api/database/key/${selectedKey}`).then(
           (a) => a.json()
         );
 
@@ -42,7 +43,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
       };
 
       const fetchTranslations = async () => {
-        const response: TranslationValue[] = await fetch(
+        const response: TranslationValue[] = await apiFetch(
           `/api/database/translationKey/${selectedKey}`
         ).then((a) => a.json());
 
@@ -72,7 +73,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
   }, [languages, translationValue]);
 
   const fetchLanguages = async () => {
-    const response = await fetch("/api/database/language").then((a) =>
+    const response = await apiFetch("/api/database/language").then((a) =>
       a.json()
     );
 
@@ -94,7 +95,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
       params.id = selectedKey;
     }
 
-    const response = await fetch("/api/database/key", {
+    const response = await apiFetch("/api/database/key", {
       method: "POST",
       body: JSON.stringify(params),
     }).then((a) => a.json());
@@ -117,7 +118,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
     };
 
     const id = translationKeyResponse.id;
-    await fetch(`/api/database/translationKey/${id}`, {
+    await apiFetch(`/api/database/translationKey/${id}`, {
       method: "POST",
       body: JSON.stringify(props),
     }).then((a) => a.json());
@@ -126,10 +127,11 @@ const TranslationForm = ({ selectedKey }: Props) => {
   };
 
   const deleteKey = () => {
-    fetch(`/api/database/key/${selectedKey}`, {
+    apiFetch(`/api/database/key/${selectedKey}`, {
       method: "DELETE",
     }).then(() => {
-      window.location.href = "/";
+      // Use basePath for page navigation
+      window.location.href = "/i18n/";
     });
   };
 

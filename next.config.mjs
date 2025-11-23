@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/i18n',
+  assetPrefix: '/i18n',
+
   async headers() {
     return [
       {

@@ -3,6 +3,7 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 import { buildNestedObject } from "../functions";
 import { NestedObject } from "../models";
+import { apiFetch } from "../api";
 
 type SidebarContextType = {
   fetchKeys: () => void;
@@ -15,7 +16,7 @@ export const SidebarContextProvider = ({ children }: PropsWithChildren) => {
   const [nestedKeys, setNestedKeys] = useState({});
 
   const fetchKeys = async () => {
-    const response = await fetch("/api/database/key").then((a) => a.json());
+    const response = await apiFetch("/api/database/key").then((a) => a.json());
 
     const nestedKeys = buildNestedObject(response);
 

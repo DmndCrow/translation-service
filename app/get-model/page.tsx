@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { apiFetch } from "@/lib/api";
 
 const GetModel = () => {
   const [models, setModels] = useState<Record<string, Record<string, string>>>(
@@ -12,7 +13,7 @@ const GetModel = () => {
   }, []);
 
   const fetchModels = async () => {
-    const response: Record<string, Record<string, string>> = await fetch(
+    const response: Record<string, Record<string, string>> = await apiFetch(
       "/api/locales/model"
     ).then((a) => a.json());
 

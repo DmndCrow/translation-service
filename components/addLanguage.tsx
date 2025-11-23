@@ -1,13 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import { apiFetch } from "@/lib/api";
 
 const AddLanguage = () => {
   const [key, setKey] = useState<string>("");
   const [language, setLanguage] = useState<string>("");
 
   const addLanguage = async () => {
-    await fetch("/api/database/language", {
+    await apiFetch("/api/database/language", {
       method: "POST",
       body: JSON.stringify({ key, language }),
     }).then((a) => {
