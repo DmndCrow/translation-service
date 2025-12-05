@@ -5,7 +5,7 @@ import { Language, TranslationValue } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
 import { apiFetch, getApiUrl } from "@/lib/api";
-import constants from "@/lib/constants";
+import { useRouter } from "next/navigation";
 
 type NewKey = {
   id?: number;
@@ -23,6 +23,7 @@ type ParentProps = {
 type Props = ParentProps;
 
 const TranslationForm = ({ selectedKey }: Props) => {
+  const router = useRouter();
   const { fetchKeys: refreshSidebarContent } = useSidebarContext();
 
   const [languages, setLanguages] = useState<Language[]>([]);
@@ -131,8 +132,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
     apiFetch(`/api/database/key/${selectedKey}`, {
       method: "DELETE",
     }).then(() => {
-      // Use basePath for page navigation
-      window.location.href = `${constants.BASE_PATH}/`;
+      router.push("/");
     });
   };
 

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { NestedObject, TranslationKey } from "@/lib/models";
 import { useEffect, useState } from "react";
-import constants from "@/lib/constants";
+import { useRouter } from "next/navigation";
 
 type Props = {
   isDefaultOpen: boolean;
@@ -10,6 +10,7 @@ type Props = {
 };
 
 const SidebarItem = ({ isDefaultOpen, label, children }: Props) => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -20,7 +21,7 @@ const SidebarItem = ({ isDefaultOpen, label, children }: Props) => {
     children && Object.keys(children).length > 0 && !("__isLeaf" in children);
 
   const redirect = () => {
-    window.location.href = `${constants.BASE_PATH}/translation/${children.id}`;
+    router.push(`/translation/${children.id}`);
   };
 
   const isCompleted = (key: TranslationKey) => {
