@@ -5,6 +5,7 @@ import { Language, TranslationValue } from "@/lib/models";
 import { PostBodyProps } from "@/pages/api/database/translationKey/[id]";
 import React, { useEffect, useState } from "react";
 import { apiFetch, getApiUrl } from "@/lib/api";
+import constants from "@/lib/constants";
 
 type NewKey = {
   id?: number;
@@ -131,7 +132,7 @@ const TranslationForm = ({ selectedKey }: Props) => {
       method: "DELETE",
     }).then(() => {
       // Use basePath for page navigation
-      window.location.href = "/i18n/";
+      window.location.href = `${constants.BASE_PATH}/`;
     });
   };
 

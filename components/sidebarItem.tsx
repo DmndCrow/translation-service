@@ -1,6 +1,7 @@
 /* eslint-disable react/no-children-prop */
 import { NestedObject, TranslationKey } from "@/lib/models";
 import { useEffect, useState } from "react";
+import constants from "@/lib/constants";
 
 type Props = {
   isDefaultOpen: boolean;
@@ -19,7 +20,7 @@ const SidebarItem = ({ isDefaultOpen, label, children }: Props) => {
     children && Object.keys(children).length > 0 && !("__isLeaf" in children);
 
   const redirect = () => {
-    window.location.href = `/translation/${children.id}`;
+    window.location.href = `${constants.BASE_PATH}/translation/${children.id}`;
   };
 
   const isCompleted = (key: TranslationKey) => {
